@@ -198,16 +198,20 @@
     {{> table}}
 </div>
 <div >
-    <form >
-        <input type="text" id="name" value="{{name}}" maxlength="40" oninput="getElementById('delete').disabled=1"/>
-        <input type="text" id="number" maxlength="15" value="{{number}}" oninput="getElementById('delete').disabled=1"/>
-        <input type="text" id="oldnumber" maxlength="15" value="{{oldnumber}}" style="display:none;"/>
-        <input type="text" id="oldname" maxlength="40" value="{{oldname}}" style="display:none;"/>
+    <form method="POST">
+        <input type="text" name="name" value="{{name}}" maxlength="40" oninput="getElementById('delete').disabled=1"/>
+        <input type="text" name="number" maxlength="15" value="{{number}}" oninput="getElementById('delete').disabled=1"/>
+        <input type="text" name="oldnumber" maxlength="15" value="{{oldnumber}}" style="display:none;"/>
+        <input type="text" name="oldname" maxlength="40" value="{{oldname}}" style="display:none;"/>
+        <br></br>
+        <input class="boton1" value="Update" formaction ="/update?_method=PUT" type="submit" />
+        <input class="boton1" id="delete" value="Удалить" type="submit" formaction ="/delete?_method=delete"/>
+        {{{canbutton}}}
     </form>
 
-    <input class="boton1" value="Update"  onclick="update()"></input>
-    <input class="boton1" id="delete" value="Удалить" onclick="deleteitem()"></input>
-    {{{canbutton}}}
+
+
+
 </div>
 
 </body>

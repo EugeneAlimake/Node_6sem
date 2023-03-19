@@ -33,11 +33,12 @@
 
 </div>
 <div>
-    <form id="Add">
-        <input type="text" id="name" maxlength="40 "/>
-        <input type="text" id="number" maxlength="15"/>
+    <form method="POST">
+        <input type="text" name="name" maxlength="40 "/>
+        <input type="text" name="number" maxlength="15"/>
+        <input type="submit" class="boton1" formaction ="/add?_method=post"  value="Add"/>
     </form>
-    <input class="boton1" onclick="add()"  value="Add"/>
+
     {{{canbutton}}}
 </div>
 </body>

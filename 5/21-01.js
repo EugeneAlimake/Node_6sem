@@ -20,7 +20,7 @@ app.use(urlencodedParser);
 app.use(methodOverride('_method'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
-app.use(express.json())
+//app.use(express.json())
 
 PhoneRoute(app);
 
