@@ -52,13 +52,13 @@ module.exports = {
             return false;
         } else {
             let phoneBook = new Array();
-            fs.readFile("phonebook.json", (e, data) => {
+            fs.readFile("phonebook.json", async (e, data) => {
                 if (e) console.log(e);
                 else {
                     phoneBook = JSON.parse(data);
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
-                    phoneBook.push(req.body);
-                    fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
+                    phoneBook.push({name: req.body.name, number: req.body.number});
+                    await fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
                     res.redirect("/");
                     return;
                 }
@@ -92,7 +92,7 @@ module.exports = {
                 }
             });
         } else {
-            fs.readFile("phonebook.json", (e, data) => {
+            fs.readFile("phonebook.json", async (e, data) => {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
@@ -104,7 +104,7 @@ module.exports = {
                         name: name,
                         number: number,
                     }
-                    fs.writeFileSync("phoneBook.json", JSON.stringify(os));
+                    await fs.writeFileSync("phoneBook.json", JSON.stringify(os));
                     res.redirect("/");
                     return;
                 }
