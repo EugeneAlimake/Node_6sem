@@ -60,6 +60,7 @@ module.exports = {
                     phoneBook.push(req.body);
                     fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
                     res.redirect("/");
+                    return;
                 }
             })
         }
@@ -105,6 +106,7 @@ module.exports = {
                     }
                     fs.writeFileSync("phoneBook.json", JSON.stringify(os));
                     res.redirect("/");
+                    return;
                 }
             })
         }
