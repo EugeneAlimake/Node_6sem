@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id='get_result'></div>
+<div id="count1"></div>
+<div>
+<button style="float: left" type="button" onclick="PrevPage()"><</button>
+<div style="float: left" id="page"></div>
+<button type="button" onclick="NextPage()">></button>
+</div>
+<script>
+    let СountPage = 0;
+    let pageNumber = document.getElementById('page')
+    async function Page(page) {
+        fetch(
+            `http://localhost:5000/api/pulpitsforhtml/${СountPage}`,{
+                method:'GET', mode: 'no-cors',
+                headers:{'Content-Type': 'application/json','Accept': 'application/json'}
+            }).then(response=>{return response.json();})
+            .then((pdata)=> {
+                console.log(pdata);
+                if(pdata!="invalid"){
+
+                get_result.innerHTML='';
+                pdata.forEach(el => {get_result.innerHTML+=(el.PULPIT+'. '+el.PULPIT_NAME+' '+el.FACULTY+''+el._count.TEACHER_TEACHER_PULPITToPULPIT+'<br/>');
+                });}
+                else {
+
+                    pageNumber.innerText = --СountPage
+                }
+
+            });
+    }
+     function NextPage() {
+        try {
+            ++СountPage
+         Page(СountPage+1)
+
+        pageNumber.innerText = СountPage
+        }catch (e){ console.log(e)}
+    }
+    async function PrevPage() {
+        if (СountPage > 1) {
+            --СountPage
+        }
+        pageNumber.innerText = СountPage
+        await Page(СountPage - 1)
+    }
+</script>
+</body>
+</html>

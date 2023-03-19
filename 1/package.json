@@ -1,0 +1,7 @@
+{
+  "name": "1",
+  "version": "1.0.0",
+  "dependencies": {
+    "redis": "^2.8.0"
+  }
+}

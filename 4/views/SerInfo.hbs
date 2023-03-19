@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список SerInfo</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<script type="text/javascript">
+    function get_element() {
+        let id = document.getElementById('SerInfo_id_get_ith_parm');
+        alert(id.value);
+        fetch(`http://localhost:3000/SerInfo/${id.value}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+
+        }).then(res => {
+            return res.json();
+        }).then((data) => {
+            result.innerHTML = "";
+
+            let counter = 0;
+            let keys;
+            let values;
+
+            data.forEach(el =>
+            {
+                keys = Object.keys(el);
+                values = Object.values(el);
+
+                let table_value = "";
+
+                for (let i = 0; i < keys.length; i++)
+                {
+                    table_value += keys[i] + ": "
+                            + values[i];
+                }
+                result.innerHTML += table_value + "<br/>";
+            })
+        })
+    }
+</script>
+<h2>Добавить SerInfo</h2>
+<form action="/SerInfo" method="POST">
+    <input type="text" name="Employee_Surname" placeholder="Employee_Surname">
+    <input type="text" name="Employee_Name" placeholder="Employee_Name">
+    <input type="text" name="Employee_Patronymic" placeholder="Employee_Patronymic">
+    <input type="text" name="Post_id" placeholder="Post_id">
+    <input type="text" name="Department_id" placeholder="Department_id">
+    <input type="text" name="Education" placeholder="Education">
+    <input type="text" name="Specialization_id" placeholder="Specialization_id">
+    <input type="submit" value="add">
+</form>
+<h2>Удалить DELETE</h2>
+<form action="/SerInfo?_method=DELETE" method="POST">
+    <input type="text" name="Employee_id" placeholder="Employee_id">
+    <input type="submit" value="add">
+</form>
+
+<h2>Изменить Put</h2>
+<form action="/SerInfo?_method=PUT" method="POST">
+    <input type="text" name="Employee_id" placeholder="Employee_Surname">
+    <input type="text" name="Employee_Surname" placeholder="Employee_Surname">
+    <input type="text" name="Employee_Name" placeholder="Employee_Name">
+    <input type="text" name="Employee_Patronymic" placeholder="Employee_Patronymic">
+    <input type="text" name="Post_id" placeholder="Post_id">
+    <input type="text" name="Department_id" placeholder="Department_id">
+    <input type="text" name="Education" placeholder="Education">
+    <input type="text" name="Specialization_id" placeholder="Specialization_id">
+    <input type="submit" value="add">
+</form>
+
+<h2>get с параметром</h2>
+<input type="text" id="SerInfo_id_get_ith_parm" name="SerInfo_id_get_ith_parm" value="{{SerInfo_id_get_ith_parm}}" placeholder="SerInfo_id_get_ith_parm">
+<input type="submit" onclick="get_element()" value="Submit">
+<div id="result"></div>
+<h1>Список SerInfo</h1>
+<table>
+{{#if data}}
+        <tr><th>Employee_Id</th><th>Employee_Surname</th><th>Employee_Name</th><th>Employee_Patronymic</th><th>Post_id</th>
+            <th>Department_id</th><th>Education</th><th>Specialization_id</th></tr>
+    {{#each data}}
+            <tr><td>{{this.Employee_id}}</td><td>{{this.Employee_Surname}}</td>
+                <td>{{this.Employee_Name}}</td><td>{{this.Employee_Patronymic}}</td>
+                <td>{{this.Post_id}}</td><td>{{this.Department_id}}</td>
+                <td>{{this.Education}}</td><td>{{this.Specialization_id}}</td>
+            </tr>
+    {{/each}}
+
+    </table>
+{{/if}}
+</body>
+<html>

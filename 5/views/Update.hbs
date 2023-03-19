@@ -1,0 +1,213 @@
+
+<head>
+    <style>input.boton1{
+        background:#eee;
+        color:#9EABB3;
+        text-decoration:none;
+        display:inline-block;
+        width:90px;
+        border: none;
+        text-align:center;
+        margin-top:7px;
+        padding:10px 10px;
+        transition:all 0.3s;
+    }
+    input.boton1:hover{
+        box-shadow:0px -5px 0 #9EABB3 inset;
+    }
+    a.fciA {
+        margin: 5px;
+        font-family:arial;
+        font-size: 20px;
+        line-height: 40px;
+        letter-spacing: -1px;
+        text-decoration: none;
+        text-align:center;
+        display:block;
+        width:350px;
+        color: #888888;
+        position: relative;
+        -webkit-transition: color 0.2s;
+        -moz-transition: color 0.2s;
+        -o-transition: color 0.2s;
+        transition: color 0.2s;
+    }
+    a.fciA:hover {
+        color: #444444;
+        background:rgba(0,0,0,0.1);
+    }
+    a.fciA:after {
+        left: -20px;
+        -webkit-transition-property: left, opacity, top;
+        -moz-transition-property: left, opacity, top;
+        -o-transition-property: left, opacity, top;
+        transition-property: left, opacity, top;
+        -webkit-transition-duration: .2s, .2s, .2s;
+        -moz-transition-duration: .2s, .2s, .2s;
+        -o-transition-duration: .2s, .2s, .2s;
+        transition-duration: .2s, .2s, .2s;
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: transparent;
+        position: absolute;
+        border-left: 5px solid #444444;
+        border-top: 5px solid #444444;
+        top: -22px;
+        opacity: 0;
+    }
+    a.fciA:hover:after {
+        left: -10px;
+        top: -12px;
+        opacity: 1;
+    }
+    a.fciA:before {
+        right: -20px;
+        -webkit-transition-property: right, opacity, top;
+        -moz-transition-property: right, opacity, top;
+        -o-transition-property: right, opacity, top;
+        transition-property: right, opacity, top;
+        -webkit-transition-duration: .2s, .2s, .2s;
+        -moz-transition-duration: .2s, .2s, .2s;
+        -o-transition-duration: .2s, .2s, .2s;
+        transition-duration: .2s, .2s, .2s;
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: transparent;
+        position: absolute;
+        border-right: 5px solid #444444;
+        border-top: 5px solid #444444;
+        top: -22px;
+        opacity: 0;
+    }
+    a.fciA:hover:before {
+        right: -10px;
+        top: -12px;
+        opacity: 1;
+    }
+    .fciSpan:after {
+        left: -20px;
+        -webkit-transition-property: left, opacity, bottom;
+        -moz-transition-property: left, opacity, bottom;
+        -o-transition-property: left, opacity, bottom;
+        transition-property: left, opacity, bottom;
+        -webkit-transition-duration: .2s, .2s, .2s;
+        -moz-transition-duration: .2s, .2s, .2s;
+        -o-transition-duration: .2s, .2s, .2s;
+        transition-duration: .2s, .2s, .2s;
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: transparent;
+        position: absolute;
+        border-left: 5px solid #444444;
+        border-bottom: 5px solid #444444;
+        bottom: -24px;
+        opacity: 0;
+    }
+    .fciSpan:hover:after {
+        left: -10px;
+        bottom: -14px;
+        opacity: 1;
+    }
+    .fciSpan:before {
+        right: -20px;
+        -webkit-transition-property: right, opacity, bottom;
+        -moz-transition-property: right, opacity, bottom;
+        -o-transition-property: right, opacity, bottom;
+        transition-property: right, opacity, bottom;
+        -webkit-transition-duration: .2s, .2s, .2s;
+        -moz-transition-duration: .2s, .2s, .2s;
+        -o-transition-duration: .2s, .2s, .2s;
+        transition-duration: .2s, .2s, .2s;
+        content: "";
+        width: 12px;
+        height: 12px;
+        background: transparent;
+        position: absolute;
+        border-right: 5px solid #444444;
+        border-bottom: 5px solid #444444;
+        bottom: -24px;
+        opacity: 0;
+    }
+    .fciSpan:hover:before {
+        right: -10px;
+        bottom: -14px;
+        opacity: 1;
+    }
+    .isDisabled {
+        color: currentColor;
+        cursor: not-allowed;
+        opacity: 0.5;
+        text-decoration: none;
+        pointer-events: none;
+    }
+    </style>
+</head>
+<script type="text/javascript">
+    function update() {
+        let name=document.getElementById('name');
+        let number=document.getElementById('number');
+        let oldname=document.getElementById('oldname');
+        let oldnumber=document.getElementById('oldnumber');
+        let data = {
+            name: name.value,
+            number: number.value,
+            oldname: oldname.value,
+            oldnumber:oldnumber.value
+        }
+        fetch(`http://localhost:3000/update`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data),
+
+        }).then((result) => {
+            if (result.redirected) {
+                window.location = result.url;
+                return;
+            }})
+    }
+    function deleteitem() {
+
+        let oldname=document.getElementById('oldname');
+        let oldnumber=document.getElementById('oldnumber');
+        let data = {
+            oldname: oldname.value,
+            oldnumber:oldnumber.value
+        }
+        fetch(`http://localhost:3000/delete`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(data),
+
+        }).then((result) => {
+            if (result.redirected) {
+                window.location = result.url;
+                return;
+            }})
+    }
+</script>
+<div>
+    {{> table}}
+</div>
+<div >
+    <form >
+        <input type="text" id="name" value="{{name}}" maxlength="40" oninput="getElementById('delete').disabled=1"/>
+        <input type="text" id="number" maxlength="15" value="{{number}}" oninput="getElementById('delete').disabled=1"/>
+        <input type="text" id="oldnumber" maxlength="15" value="{{oldnumber}}" style="display:none;"/>
+        <input type="text" id="oldname" maxlength="40" value="{{oldname}}" style="display:none;"/>
+    </form>
+
+    <input class="boton1" value="Update"  onclick="update()"></input>
+    <input class="boton1" id="delete" value="Удалить" onclick="deleteitem()"></input>
+    {{{canbutton}}}
+</div>
+
+</body>

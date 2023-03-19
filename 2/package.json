@@ -1,0 +1,9 @@
+{
+  "name": "2",
+  "version": "1.0.0",
+  "dependencies": {
+    "randomstring": "^1.2.3",
+    "sequelize": "^6.28.0",
+    "tedious": "^15.1.2"
+  }
+}

@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Department {
+  Department_id       Int                   @id(map: "PK__Departme__151571C9091ABBAA") @default(autoincrement())
+  Department_name     String?               @db.NVarChar(100)
+  Department_chief    String?               @db.NVarChar(50)
+  telephone           String?               @db.NVarChar(20)
+  service_information service_information[]
+}
+
+model Employee_status {
+  Employee_id         Int                 @id(map: "PK__Employee__781228D9C0995C11")
+  Employee_status     String?             @db.NVarChar(20)
+  service_information service_information @relation(fields: [Employee_id], references: [Employee_id], onDelete: Cascade, onUpdate: NoAction, map: "FK__Employee___Emplo__33D4B598")
+}
+
+model personal_information {
+  Employee_id                    Int                 @id(map: "PK__personal__781228D91278E462")
+  birthdate                      DateTime?           @db.Date
+  Passport_identification_number String?             @db.NVarChar(20)
+  Registration_address           String?             @db.NVarChar(100)
+  marital_status                 String?             @db.NVarChar(20)
+  service_information            service_information @relation(fields: [Employee_id], references: [Employee_id], onDelete: Cascade, onUpdate: NoAction, map: "FK__personal___marit__300424B4")
+}
+
+model Post {
+  Post_id             Int                   @id(map: "PK__Post__587ADB65EA101693") @default(autoincrement())
+  Post_name           String?               @db.NVarChar(100)
+  service_information service_information[]
+}
+
+model service_information {
+  Employee_id          Int                   @id(map: "PK__service___781228D9AEB2F3DD") @default(autoincrement())
+  Employee_Surname     String?               @db.NVarChar(20)
+  Employee_Name        String?               @db.NVarChar(20)
+  Employee_Patronymic  String?               @db.NVarChar(20)
+  Post_id              Int?
+  Department_id        Int?
+  Education            String?               @db.NVarChar(50)
+  Specialization_id    Int?
+  Employee_status      Employee_status?
+  personal_information personal_information?
+  Post                 Post?                 @relation(fields: [Post_id], references: [Post_id], onDelete: Cascade, onUpdate: NoAction, map: "FK__service_i__Post___2B3F6F97")
+  Department           Department?           @relation(fields: [Department_id], references: [Department_id], onDelete: Cascade, onUpdate: NoAction, map: "FK__service_i__Speci__2A4B4B5E")
+  Specialization       Specialization?       @relation(fields: [Specialization_id], references: [Specialization_id], onDelete: Cascade, onUpdate: NoAction, map: "FK__service_i__Speci__2C3393D0")
+}
+
+model Specialization {
+  Specialization_id   Int                   @id(map: "PK__Speciali__015553CBAAA62179") @default(autoincrement())
+  Specialization_name String?               @db.NVarChar(50)
+  service_information service_information[]
+}
+
+model sysdiagrams {
+  name         String @db.NVarChar(128)
+  principal_id Int
+  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B61BAB1BE66") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+
+  @@unique([principal_id, name], map: "UK_principal_name")
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список Department</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<script type="text/javascript">
+    function get_element() {
+        let id = document.getElementById('Department_id_get_ith_parm');
+        alert(id.value);
+        fetch(`http://localhost:3000/Department/${id.value}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+
+        }).then(res => {
+            return res.json();
+        }).then((data) => {
+            result.innerHTML = "";
+
+            let counter = 0;
+            let keys;
+            let values;
+
+            data.forEach(el =>
+            {
+                keys = Object.keys(el);
+                values = Object.values(el);
+
+                let table_value = "";
+
+                for (let i = 0; i < keys.length; i++)
+                {
+                    table_value += keys[i] + ": "
+                            + values[i];
+                }
+                result.innerHTML += table_value + "<br/>";
+            })
+        })
+    }
+</script>
+<h2>Добавить Specialization</h2>
+<form action="/DepartmentPost" method="POST">
+    <input type="text" name="Department_name" placeholder="Department_name">
+    <input type="text" name="Department_chief" placeholder="Department_chief">
+    <input type="text" name="telephone" placeholder="telephone">
+    <input type="submit" value="add">
+</form>
+
+<h2>Удалить DELETE</h2>
+<form action="/DepartmentDel?_method=DELETE" method="POST">
+    <input type="text" name="Department_id" placeholder="Department_id">
+    <input type="submit" value="add">
+</form>
+
+<h2>Изменить Put</h2>
+<form action="/Department?_method=PUT" method="POST">
+    <input type="text" name="Department_id" placeholder="Department_id">
+    <input type="text" name="Department_name" placeholder="Department_name">
+    <input type="text" name="Department_chief" placeholder="Department_chief">
+    <input type="text" name="telephone" placeholder="telephone">
+    <input type="submit" value="add">
+</form>
+
+<h2>get с параметром</h2>
+<input type="text" id="Department_id_get_ith_parm" name="Department_id_get_ith_parm" value="{{Department_id_get_ith_parm}}" placeholder="Post_id_get_ith_parm">
+<input type="submit" onclick="get_element()" value="Submit">
+<div id="result"></div>
+<h1>Список Department</h1>
+<table>
+{{#if data}}
+        <tr><th>ID</th><th>Department_name</th><th>Department_chief</th><th>telephone</th></tr>
+    {{#each data}}
+            <tr><td>{{this.Department_id}}</td><td>{{this.Department_name}}</td><td>{{this.Department_chief}}</td><td>{{this.telephone}}</td></tr>
+    {{/each}}
+
+    </table>
+{{/if}}
+</body>
+<html>

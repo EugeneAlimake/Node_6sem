@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model AUDITORIUM {
+  AUDITORIUM                                                  String           @id(map: "AUDITORIUM_PK") @db.Char(20)
+  AUDITORIUM_TYPE                                             String?          @db.Char(10)
+  AUDITORIUM_CAPACITY                                         Int?             @default(1, map: "AUDITORIUM_CAPACITY_CHECK")
+  AUDITORIUM_NAME                                             String?          @db.VarChar(50)
+  AUDITORIUM_TYPE_AUDITORIUM_AUDITORIUM_TYPEToAUDITORIUM_TYPE AUDITORIUM_TYPE? @relation("AUDITORIUM_AUDITORIUM_TYPEToAUDITORIUM_TYPE", fields: [AUDITORIUM_TYPE], references: [AUDITORIUM_TYPE], onDelete: NoAction, onUpdate: NoAction, map: "AUDITORIUM_AUDITORIUM_TYPE_FK")
+}
+
+model AUDITORIUM_TYPE {
+  AUDITORIUM_TYPE                                        String       @id(map: "AUDITORIUM_TYPE_PK") @db.Char(10)
+  AUDITORIUM_TYPENAME                                    String?      @db.VarChar(30)
+  AUDITORIUM_AUDITORIUM_AUDITORIUM_TYPEToAUDITORIUM_TYPE AUDITORIUM[] @relation("AUDITORIUM_AUDITORIUM_TYPEToAUDITORIUM_TYPE")
+}
+
+model FACULTY {
+  FACULTY                        String   @id(map: "PK__FACULTY__81E78829DD46B8E9") @db.Char(10)
+  FACULTY_NAME                   String?  @default("???", map: "DF__FACULTY__FACULTY__24927208") @db.VarChar(50)
+  PULPIT_PULPIT_FACULTYToFACULTY PULPIT[] @relation("PULPIT_FACULTYToFACULTY")
+}
+
+model PULPIT {
+  PULPIT                          String    @id(map: "PULPIT_PK") @db.Char(20)
+  PULPIT_NAME                     String?   @db.VarChar(100)
+  FACULTY                         String?   @db.Char(10)
+  FACULTY_PULPIT_FACULTYToFACULTY FACULTY?  @relation("PULPIT_FACULTYToFACULTY", fields: [FACULTY], references: [FACULTY], onDelete: NoAction, onUpdate: NoAction, map: "PULPIT_FACULTY_FK")
+  SUBJECT_SUBJECT_PULPITToPULPIT  SUBJECT[] @relation("SUBJECT_PULPITToPULPIT")
+  TEACHER_TEACHER_PULPITToPULPIT  TEACHER[] @relation("TEACHER_PULPITToPULPIT")
+}
+
+model SUBJECT {
+  SUBJECT                       String  @id(map: "SUBJECT_PK") @db.Char(10)
+  SUBJECT_NAME                  String? @unique(map: "UQ__SUBJECT__29B3CFA76684FF4B") @db.VarChar(100)
+  PULPIT                        String? @db.Char(20)
+  PULPIT_SUBJECT_PULPITToPULPIT PULPIT? @relation("SUBJECT_PULPITToPULPIT", fields: [PULPIT], references: [PULPIT], onDelete: NoAction, onUpdate: NoAction, map: "SUBJECT_PULPIT_FK")
+}
+
+model sysdiagrams {
+  name         String @db.NVarChar(128)
+  principal_id Int
+  diagram_id   Int    @id(map: "PK__sysdiagr__C2B05B61C3230B2C") @default(autoincrement())
+  version      Int?
+  definition   Bytes?
+
+  @@unique([principal_id, name], map: "UK_principal_name")
+}
+
+model TEACHER {
+  TEACHER                       String  @id(map: "TEACHER_PK") @db.Char(10)
+  TEACHER_NAME                  String? @db.VarChar(100)
+  PULPIT                        String? @db.Char(20)
+  PULPIT_TEACHER_PULPITToPULPIT PULPIT? @relation("TEACHER_PULPITToPULPIT", fields: [PULPIT], references: [PULPIT], onDelete: NoAction, onUpdate: NoAction, map: "TEACHER_PULPIT_FK")
+}

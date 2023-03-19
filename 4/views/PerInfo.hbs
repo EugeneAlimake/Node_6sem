@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список PerInfo</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<script type="text/javascript">
+    function get_element() {
+        let id = document.getElementById('PerInfo_id_get_ith_parm');
+        alert(id.value);
+        fetch(`http://localhost:3000/PerInfo/${id.value}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": 'application/json; charset=utf-8',
+                'Accept': 'application/json'
+            },
+
+        }).then(res => {
+            return res.json();
+        }).then((data) => {
+            result.innerHTML = "";
+
+            let counter = 0;
+            let keys;
+            let values;
+
+            data.forEach(el =>
+            {
+                keys = Object.keys(el);
+                values = Object.values(el);
+
+                let table_value = "";
+
+                for (let i = 0; i < keys.length; i++)
+                {
+                    table_value += keys[i] + ": "
+                            + values[i];
+                }
+                result.innerHTML += table_value + "<br/>";
+            })
+        })
+    }
+</script>
+<h2>Добавить PerInfo</h2>
+<form action="/PerInfoPost" method="POST">
+    <input type="text" name="Employee_id" placeholder="Employee_id">
+    <input type="text" name="birthdate" placeholder="birthdate">
+    <input type="text" name="Passport_identification_number" placeholder="Passport_identification_number">
+    <input type="text" name="Registration_address" placeholder="Registration_address">
+    <input type="text" name="marital_status" placeholder="женат/замужем или холост">
+    <input type="submit" value="add">
+</form>
+<h2>Удалить DELETE</h2>
+<form action="/PerInfoDel?_method=DELETE" method="POST">
+    <input type="text" name="Employee_id" placeholder="Employee_id">
+    <input type="submit" value="add">
+</form>
+
+<h2>Изменить Put</h2>
+<form action="/PerInfo?_method=PUT" method="POST">
+    <input type="text" name="Employee_id" placeholder="Employee_id">
+    <input type="text" name="birthdate" placeholder="birthdate">
+    <input type="text" name="Passport_identification_number" placeholder="Passport_identification_number">
+    <input type="text" name="Registration_address" placeholder="Registration_address">
+    <input type="text" name="marital_status" placeholder="женат/замужем или холост">
+    <input type="submit" value="add">
+</form>
+
+<h2>get с параметром</h2>
+<input type="text" id="PerInfo_id_get_ith_parm" name="PerInfo_id_get_ith_parm" value="{{PerInfo_id_get_ith_parm}}" placeholder="PerInfo_id_get_ith_parm">
+<input type="submit" onclick="get_element()" value="Submit">
+<div id="result"></div>
+<h1>Список PerInfo</h1>
+<table>
+{{#if data}}
+        <tr><th>Employee_Id</th><th>birthdate</th><th>Passport_identification_number</th><th>Registration_address</th><th>marital_status</th></tr>
+    {{#each data}}
+            <tr><td>{{this.Employee_id}}</td><td>{{this.birthdate}}</td>
+                <td>{{this.Passport_identification_number}}</td><td>{{this.Registration_address}}</td>
+                <td>{{this.marital_status}}</td>
+            </tr>
+    {{/each}}
+
+    </table>
+{{/if}}
+</body>
+
+<html>

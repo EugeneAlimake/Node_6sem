@@ -1,0 +1,87 @@
+<html>
+<head>
+  <title>18 - Sequelize</title>
+</head>
+<body>
+<div id='get_result'></div>
+<button onclick="Get()">GET</button>
+<br><br>
+Teacher: <input name="Teacher" id="Teacher" />
+<br><br>
+Teacher_NAME: <input name="Teacher_name" id="Teacher_name" />
+<br><br>
+Pulpit: <input name="Pulpit" id="Pulpit" />
+<br><br>
+<button onclick="Post()">Post</button>
+<br><br>
+Teacher: <input id="TeacherPut" />
+<br><br>
+Teacher_NAME: <input id="Teacher_namePut"  />
+<br><br>
+Pulpit: <input id="PulpitPut" />
+<br><br>
+<button onclick="Put()">Put</button>
+<br><br>
+Teacher: <input id="TeacherDel" />
+<br><br>
+<button onclick="Del()">Del</button>
+<script   type='text/javascript' >
+  function Get(){
+    console.log('GET');
+    fetch('http://localhost:5000/api/teachers',{
+              method:'GET', mode: 'no-cors',
+              headers:{'Content-Type': 'application/json','Accept': 'application/json'}
+            }
+    )
+            .then(response=>{return response.json();})
+            .then((pdata)=> {
+              console.log('pdata',pdata);
+              get_result.innerHTML='';
+              pdata.forEach(el => {get_result.innerHTML+=(el.teacher+'. '+el.teacher_name+' '+el.pulpit+'<br/>');
+              });
+            });
+  }
+  function Post(){
+    console.log('Post');
+    fetch('http://localhost:5000/api/teachers',{
+              method:'POST', mode: 'no-cors',
+              headers:{'Content-Type': 'application/json','Accept': 'application/json'},
+              body:JSON.stringify({teacher:Teacher.value,teacher_name:Teacher_name.value,pulpit:Pulpit.value})
+            }
+    )
+            .then(response=>{
+              console.log(JSON.stringify({teacher:Teacher.value,teacher_name:Teacher_name.value,pulpit: Pulpit.value}));
+              return response.json();})
+            .then((pdata)=> {
+              console.log('POST.pdata',pdata);
+            });
+  }
+  function Put(){
+    console.log('PUT');
+    fetch('http://localhost:5000/api/teachers',{
+              method:'PUT',
+              headers:{'Content-Type': 'application/json','Accept': 'application/json'},
+              body:JSON.stringify({teacher:TeacherPut.value,teacher_name: Teacher_namePut.value,pulpit: PulpitPut.value})
+            }
+    )
+            .then(response=>{return response.json();})
+            .then((pdata)=> {
+              console.log('PUT.pdata',pdata);
+            });
+  }
+  function Del(){
+    console.log('Delete');
+    console.log('http://localhost:5000/api/teachers/'+TeacherDel.value);
+    fetch('http://localhost:5000/api/teachers/'+TeacherDel.value,{
+              method:'Delete',
+              headers:{'Content-Type': 'application/json','Accept': 'application/json'},
+            }
+    )
+            .then(response=>{return response.json();})
+            .then((pdata)=> {
+              console.log('Delete.pdata',pdata);
+            });
+  }
+</script>
+</body>
+</html>

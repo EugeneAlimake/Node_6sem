@@ -1,0 +1,22 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<div>
+
+    {{#each numbers}}
+        <a class="fciA navItem" onclick="window.location.href='update/{{name}}/{{number}}'">
+            <span class="fciSpan">
+               {{name}}
+             {{number}}
+            </span>
+        </a>
+        <br/>
+
+    {{/each}}
+
+</div>
+<div>
+    <input class="boton1" value="Add" onclick="window.location.href='add'"></input>
+</div>
+</body>
