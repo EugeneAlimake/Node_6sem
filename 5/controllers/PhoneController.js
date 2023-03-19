@@ -6,7 +6,7 @@ module.exports = {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
-                res.render("phonebook.hbs", {
+                res.render("phonebook", {
                     numbers: os
                 })
             }
@@ -18,7 +18,7 @@ module.exports = {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
-                res.render("add.hbs", {
+                res.render("add", {
                     layout: false,
                     numbers: os,
                 });
@@ -31,7 +31,7 @@ module.exports = {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
-                res.render("Update.hbs", {
+                res.render("Update", {
                     layout: false,
                     numbers: os,
                     oldname: req.params.name,
@@ -80,7 +80,7 @@ module.exports = {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
-                    res.render("Update.hbs", {
+                    res.render("Update", {
                         layout: false,
                         numbers: os,
                         oldnumber: req.body.oldnumber,
