@@ -2,7 +2,7 @@ const fs = require("fs");
 
 module.exports = {
     GetAllPhone: async (req, res) => {
-        fs.readFile("./phonebook.json", (e, data) => {
+        fs.readFile("phonebook.json", (e, data) => {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
@@ -14,7 +14,7 @@ module.exports = {
     },
 
     returnViewAdd: async (req, res) => {
-        fs.readFile("./phonebook.json", (e, data) => {
+        fs.readFile("phonebook.json", (e, data) => {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
@@ -27,7 +27,7 @@ module.exports = {
     },
 
     returnViewUpdate: async (req, res) => {
-        fs.readFile("./phonebook.json", (e, data) => {
+        fs.readFile("phonebook.json", (e, data) => {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
@@ -52,13 +52,13 @@ module.exports = {
             return false;
         } else {
             let phoneBook = new Array();
-            fs.readFile("./phonebook.json", (e, data) => {
+            fs.readFile("phonebook.json", (e, data) => {
                 if (e) console.log(e);
                 else {
                     phoneBook = JSON.parse(data);
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
                     phoneBook.push(req.body);
-                    fs.writeFileSync("./phoneBook.json", JSON.stringify(phoneBook));
+                    fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
                     res.redirect("/");
                 }
             })
@@ -76,7 +76,7 @@ module.exports = {
         let phoneno = /^\+?([0-9]{3})\)? ([0-9]{2}) ([0-9]{7})$/;
         if ((name.length == 0) || (number.length == 0) || (!number.match(phoneno))) {
             console.log("Data legth must be more than 0");
-            fs.readFile("./phonebook.json", (e, data) => {
+            fs.readFile("phonebook.json", (e, data) => {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
@@ -91,7 +91,7 @@ module.exports = {
                 }
             });
         } else {
-            fs.readFile("./phonebook.json", (e, data) => {
+            fs.readFile("phonebook.json", (e, data) => {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
@@ -103,7 +103,7 @@ module.exports = {
                         name: name,
                         number: number,
                     }
-                    fs.writeFileSync("./phoneBook.json", JSON.stringify(os));
+                    fs.writeFileSync("phoneBook.json", JSON.stringify(os));
                     res.redirect("/");
                 }
             })
