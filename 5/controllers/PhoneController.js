@@ -19,7 +19,7 @@ module.exports = {
             else {
                 let os = JSON.parse(data);
                 res.render("add", {
-                    layout: false,
+
                     numbers: os,
                 });
             }

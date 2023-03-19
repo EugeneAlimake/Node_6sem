@@ -14,8 +14,8 @@ app.engine('.hbs', hbs.engine);
 app.set("view engine", ".hbs");
 app.set('port',3000);
 
+app.set('/static', express.static(path.join(__dirname,'/static')));
 app.use(express.static(path.join(__dirname,'/static')));
-app.use(express.static(path.join(__dirname, '/views')));
 app.use(urlencodedParser);
 app.use(methodOverride('_method'));
 app.use(bodyParser.json())
