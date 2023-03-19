@@ -18,7 +18,7 @@ module.exports = {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
-                res.render("add", {
+                res.render("Add", {
 
                     numbers: os,
                 });
