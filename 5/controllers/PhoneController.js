@@ -1,6 +1,5 @@
 const fs = require("fs");
 const path = require('path');
-
 module.exports = {
     GetAllPhone: async (req, res) => {
         fs.readFile("phonebook.json", (e, data) => {
@@ -53,7 +52,7 @@ module.exports = {
             return false;
         } else {
             let phoneBook = new Array();
-            fs.writeFileSync("phonebook.json", async (e, data) => {
+            fs.readFile("phonebook.json", async (e, data) => {
                 if (e) console.log(e);
                 else {
                     phoneBook = JSON.parse(data);
