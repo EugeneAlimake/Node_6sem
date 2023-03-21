@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require('path');
 
 module.exports = {
     GetAllPhone: async (req, res) => {
@@ -52,14 +53,15 @@ module.exports = {
             return false;
         } else {
             let phoneBook = new Array();
-            fs.readFile("phonebook.json", async (e, data) => {
+            fs.writeFileSync("phonebook.json", async (e, data) => {
                 if (e) console.log(e);
                 else {
                     phoneBook = JSON.parse(data);
                     console.log(`add:${name}`)
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
                     phoneBook.push({name: `${req.body.name}`, number: `${req.body.number}`});
-                    await fs.writeFileSync("./phoneBook.json", JSON.stringify(phoneBook));
+                    const filepath = path.join(process.cwd(), 'phoneBook.json');
+                    await fs.writeFileSync(filepath, JSON.stringify(phoneBook));
                     res.redirect("/");
                     return;
                 }
