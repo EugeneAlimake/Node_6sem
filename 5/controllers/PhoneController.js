@@ -59,7 +59,7 @@ module.exports = {
                     console.log(`add:${name}`)
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
                     phoneBook.push({name: `${req.body.name}`, number: `${req.body.number}`});
-                    await fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
+                    await fs.writeFileSync("./phoneBook.json", JSON.stringify(phoneBook));
                     res.redirect("/");
                     return;
                 }
@@ -78,7 +78,7 @@ module.exports = {
         let phoneno = /^\+?([0-9]{3})\)? ([0-9]{2}) ([0-9]{7})$/;
         if ((name.length == 0) || (number.length == 0) || (!number.match(phoneno))) {
             console.log("Data legth must be more than 0");
-            fs.readFile("phonebook.json", (e, data) => {
+            fs.readFile("./phonebook.json", (e, data) => {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
@@ -106,7 +106,7 @@ module.exports = {
                         number: `${number}`,
                     }
                     console.log(`add:${req.body.name}`)
-                    await fs.writeFileSync("phoneBook.json", JSON.stringify(os));
+                    await fs.writeFileSync("./phoneBook.json", JSON.stringify(os));
                     res.redirect("/");
                     return;
                 }
