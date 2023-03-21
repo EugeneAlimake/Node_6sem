@@ -58,7 +58,7 @@ module.exports = {
                     phoneBook = JSON.parse(data);
                     console.log(`add:${name}`)
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
-                    phoneBook.push({name: req.body.name, number: req.body.number});
+                    phoneBook.push({name: `${req.body.name}`, number: `${req.body.number}`});
                     await fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
                     res.redirect("/");
                     return;
@@ -102,8 +102,8 @@ module.exports = {
                     );
 
                     os[index] = {
-                        name: name,
-                        number: number,
+                        name: `${name}`,
+                        number: `${number}`,
                     }
                     console.log(`add:${req.body.name}`)
                     await fs.writeFileSync("phoneBook.json", JSON.stringify(os));
