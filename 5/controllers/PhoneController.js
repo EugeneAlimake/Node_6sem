@@ -57,13 +57,15 @@ module.exports = {
                 else {
                     phoneBook = JSON.parse(data);
                     console.log(`add:${name}`)
-                    const chckedNumber = phoneBook.find((obj) => obj.name == number)
+                    const chckedNumber = phoneBook.find((obj) => obj.number == number)
+                    console.log(chckedNumber);
+                    if(!chckedNumber){
                     phoneBook.push(req.body);
                     fs.writeFile( `./phoneBook.json`, JSON.stringify(phoneBook, null, '  '),err=>{
                         if (err) {
                             throw err;
                         }
-                    });
+                    });}
                     res.redirect("/");
                     return;
                 }
