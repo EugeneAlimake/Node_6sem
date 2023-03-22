@@ -59,7 +59,7 @@ module.exports = {
                     console.log(`add:${name}`)
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
                     phoneBook.push(req.body);
-                    fs.writeFile( `phoneBook.json`, JSON.stringify(phoneBook, null, '  '),err=>{
+                    fs.writeFile( `./phoneBook.json`, JSON.stringify(phoneBook, null, '  '),err=>{
                         if (err) {
                             throw err;
                         }
@@ -97,7 +97,7 @@ module.exports = {
                 }
             });
         } else {
-            fs.readFile("phonebook.json", async (e, data) => {
+            fs.readFile("./phonebook.json", async (e, data) => {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
@@ -110,7 +110,7 @@ module.exports = {
                         number: `${number}`,
                     }
                     console.log(`add:${req.body.name}`)
-                    fs.writeFile(`phoneBook.json`, JSON.stringify(os, null, '  '),err=>{
+                    fs.writeFile(`./phoneBook.json`, JSON.stringify(os, null, '  '),err=>{
                         if (err) {
                             throw err;
                         }
