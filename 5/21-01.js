@@ -19,6 +19,7 @@ const corsOptions = {
     origin: 'https://nodejs-3etv.onrender.com'
 };
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'/static')));
 app.use(urlencodedParser);
 app.use(methodOverride('_method'));
