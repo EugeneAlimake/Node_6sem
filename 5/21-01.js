@@ -25,9 +25,9 @@ app.use(urlencodedParser);
 app.use(methodOverride('_method'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
+app.use('/', PhoneRoute);
 //app.use(express.json())
 
-PhoneRoute(app);
 
 
 app.listen(app.get('port'), () => {
