@@ -59,7 +59,11 @@ module.exports = {
                     console.log(`add:${name}`)
                     const chckedNumber = phoneBook.find((obj) => obj.name == number)
                     phoneBook.push(req.body);
-                    await fs.writeFileSync("phoneBook.json", JSON.stringify(phoneBook));
+                    fs.writeFile( `phoneBook.json`, JSON.stringify(phoneBook, null, '  '),err=>{
+                        if (err) {
+                            throw err;
+                        }
+                    });
                     res.redirect("/");
                     return;
                 }
@@ -106,7 +110,11 @@ module.exports = {
                         number: `${number}`,
                     }
                     console.log(`add:${req.body.name}`)
-                    await fs.writeFileSync("./phoneBook.json", JSON.stringify(os));
+                    fs.writeFile(`phoneBook.json`, JSON.stringify(os, null, '  '),err=>{
+                        if (err) {
+                            throw err;
+                        }
+                    });
                     res.redirect("/");
                     return;
                 }
