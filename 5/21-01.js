@@ -18,7 +18,7 @@ app.set('/views', express.static(path.join(__dirname,'/views')));
 const corsOptions = {
     origin: 'https://nodejs-3etv.onrender.com'
 };
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname,'/static')));
 app.use(urlencodedParser);
 app.use(methodOverride('_method'));
