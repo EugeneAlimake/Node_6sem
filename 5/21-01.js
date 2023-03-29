@@ -6,7 +6,6 @@ const path = require("path");
 const cors = require('cors');
 const app = express();
 
-
 const urlencodedParser = express.urlencoded({extended: false});
 const hbs = require('express-handlebars').create({extname:'.hbs',  defaultLayout: false, layoutsDir:"/views", helpers:{canbutton:()=>{ return `<input class="boton1"  value="Отказаться" onclick="window.location = '/'"></input>`}}});
 

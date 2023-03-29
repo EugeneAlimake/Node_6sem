@@ -2,7 +2,7 @@ const fs = require("fs");
 
 module.exports = {
     GetAllPhone: async (req, res) => {
-        fs.readFile("phonebook.json", (e, data) => {
+        fs.readFile("./phonebook.json", (e, data) => {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
@@ -14,7 +14,7 @@ module.exports = {
     },
 
     returnViewAdd: async (req, res) => {
-        fs.readFile("phonebook.json", (e, data) => {
+        fs.readFile("./phonebook.json", (e, data) => {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
@@ -27,7 +27,7 @@ module.exports = {
     },
 
     returnViewUpdate: async (req, res) => {
-        fs.readFile("phonebook.json", (e, data) => {
+        fs.readFile("./phonebook.json", (e, data) => {
             if (e) console.log(e);
             else {
                 let os = JSON.parse(data);
@@ -52,7 +52,7 @@ module.exports = {
             return false;
         } else {
             let phoneBook = new Array();
-            fs.readFile("phonebook.json", async (e, data) => {
+            fs.readFile("./phonebook.json", async (e, data) => {
                 if (e) console.log(e);
                 else {
                     phoneBook = JSON.parse(data);
@@ -103,20 +103,25 @@ module.exports = {
                 if (e) console.log(e);
                 else {
                     let os = JSON.parse(data);
-                    const index = os.findIndex(
-                        (obj) => obj.name == oldname
-                    );
 
-                    os[index] = {
-                        name: `${name}`,
-                        number: `${number}`,
-                    }
-                    console.log(`add:${req.body.name}`)
-                    fs.writeFile(`./phoneBook.json`, JSON.stringify(os, null, '  '),err=>{
-                        if (err) {
-                            throw err;
+                    const chckedNumber = os.find((obj) => obj.number == number)
+                    console.log(chckedNumber);
+                    if(chckedNumber.name==oldname) {
+                        const index = os.findIndex(
+                            (obj) => obj.name == oldname
+                        );
+
+                        os[index] = {
+                            name: `${name}`,
+                            number: `${number}`,
                         }
-                    });
+                        console.log(`add:${req.body.name}`)
+                        fs.writeFile(`./phoneBook.json`, JSON.stringify(os, null, '  '), err => {
+                            if (err) {
+                                throw err;
+                            }
+                        });
+                    }
                     res.redirect("/");
                     return;
                 }
