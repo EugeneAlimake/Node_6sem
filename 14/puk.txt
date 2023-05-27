@@ -1,0 +1,3 @@
+
+emsdk activate latest
+emcc -O3 -o p.wasm -s WASM=1 p.c --no-entry

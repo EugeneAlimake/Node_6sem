@@ -1,0 +1,18 @@
+{
+  "name": "7",
+  "version": "1.0.0",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "redis": "^2.8.0",
+    "sequelize": "^6.30.0",
+    "tedious": "^15.1.3"
+  }
+}

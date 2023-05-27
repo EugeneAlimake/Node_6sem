@@ -1,0 +1,10 @@
+{
+  "name": "8",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "passport": "^0.6.0",
+    "passport-google-oauth": "^2.0.0"
+  }
+}

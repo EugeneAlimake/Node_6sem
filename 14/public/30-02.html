@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>sun(3,4)=<span id="rsum"></span></p>
+<p>sub(3,4)=<span id="rsub"></span></p>
+<p>mul(3,4)=<span id="rmul"></span></p>
+<script>
+    (async ()=> {
+        const response = await fetch('http://localhost:3000/p.wasm');
+       const {module, instance} = await WebAssembly.instantiateStreaming(response);
+        rsum.innerHTML=instance.exports.sum(3,4);
+        rsub.innerHTML=instance.exports.sub(3,4);
+        rmul.innerHTML=instance.exports.mul(3,4);
+
+    })();
+</script>
+</body>
+</html>

@@ -103,10 +103,11 @@ let http_handler = async (req, res) => {
                         faculty.dataValues[pse].forEach(pulpit => {
                             console.log('--', pulpit.dataValues.pulpit, pulpit.dataValues.pulpit_name);
                             Subject.findAll({where: {pulpit: pulpit.dataValues.pulpit}}).then(subjects => {
-                                res.writeHead(200, {'Content-Type': 'application/json'});
-                                res.end(JSON.stringify(subjects));
+
+
                             })
                         })
+
                     }
                 )
             })
@@ -234,22 +235,21 @@ let http_handler = async (req, res) => {
 
             const result = await sequelize.transaction().then(async t => {
                 // Auditorium.findAll().then( async(auditoriums) => {
-                    // auditoriums.forEach(async(auditorium) => {
-                       await Auditorium.update(
-                            {
-                                auditorium_capacity: 1
-                            },
-                            {
-                                where: {},
-                                transaction: t
-                            }
-                        )
-                    // })
-                    // let audit = await Auditorium.findAll({}, {transaction: t});
-                    // console.log(audit);
+                // auditoriums.forEach(async(auditorium) => {
+                await Auditorium.update(
+                    {
+                        auditorium_capacity: 1
+                    },
+                    {
+                        where: {},
+                        transaction: t
+                    }
+                )
+                // })
+                // let audit = await Auditorium.findAll({}, {transaction: t});
+                // console.log(audit);
 
                 // })
-
 
 
                 setTimeout(async () => {

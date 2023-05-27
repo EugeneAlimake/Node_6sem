@@ -1,0 +1,39 @@
+--HOSTS: C:\Windows\System32\drivers\etc\hosts
+--CERTIFICATES: certmgr.msc
+--CURL: Remove-item alias:curl, curl -k https://KKV(LAB25-KKV):8443
+
+команда genrsa – генер приват ключ СA 
+(CA.key)
+1. Генерируем приватный ключ удостоверяющего центра CA.key(он шифрует цифровую подпись, которая мб прочитана с помощью откр ключа)
+a  openssl genrsa -des3 -out CA.key 2048
+
+2. Генерируем сертификат для удостоверяющего центра(сертификат на который мы будем шифровать ресурсы)(CA.crt)
+a openssl req -x509 -new -days 365 -sha256 -key ./CA.key -sha256 -out ./CA.crt -config ./request_configCA.cfg
+
+генер публич ключ для ресурса (LAB.key)
+3. Генерируем приватный ключ ресурса RECOURSE.key
+b openssl genrsa -des3 -out RECOURSE.key 2048
+
+конфиг. файл для ресурса LAB.cfg
+
+генер запрос на получение сертификата: (исп. конф.файл, кот отвеч на вопросы)
+(сод. инфу: кто выдал, кому, ск.действи, для каких целей исп)
+(сод. в себе публ ключ, кот. генер на основе прив.ключа)
+(LAB.csr)
+
+4. Генерируем сам запрос
+b openssl req -new -key ./RECOURSE.key -out ./RECOURSE.csr -sha256 -config ./request_configRECOURSE.cfg
+
+генер сертификат на основе запроса (исп. публ ключ) передаем наш запрос certification-authority, а тот д.подписать след. командой:
+(созд. серийный №)
+(LAB.crt)
+
+5. C помощью запроса получаем сертификат для ресурса
+a openssl x509 -req -days 365 -sha256 -in ./RECOURSE.csr -CA ./CA.crt -CAkey ./CA.key -CAcreateserial -out ./RECOURSE.crt -extensions v3_req -extfile ./request_configRECOURSE.cfg
+
+7) заносим наш сертификат в наше хранилище сертификатов (mmc.exe – открыть Косно)
+Сертификаты – Импорт…
+* POIT (Издатель – наши д-е: кто,email,город…)
+* RS-LAB26-NEV (для нашего ресурса. Издатель + папка Субъект: то же самое но для ресурса)
+цифр.подпись берется в хэш, кот. потом шифруется -> м показать сертификат кому угодно
+8) заносим домены в hosts (C:\Windows\System32\drivers\etc\hosts)

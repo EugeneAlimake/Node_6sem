@@ -45,7 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/login', (req, res, next) => {
-        console.log('preAuth');
+
         if (req.session.logout && req.headers['authorization']) {
             req.session.logout = false;
             delete req.headers['authorization'];

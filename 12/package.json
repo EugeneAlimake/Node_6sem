@@ -1,0 +1,10 @@
+{
+  "name": "12",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "webdav": "^5.0.0-r3",
+    "webdav-server": "^2.6.2"
+  }
+}
